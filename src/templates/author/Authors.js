@@ -18,7 +18,7 @@ export default class AuthorBox extends Component {
       prev: null,
       authors: [{}],
       statusAPI: null,
-      edit: [false, {}]
+      edit: { status: false, author: {} }
     };
   }
 
@@ -28,39 +28,51 @@ export default class AuthorBox extends Component {
 
   carregaLista(url) {
     AuthorAPI.listar(url)
-      .then(data => this.setState({ ...data, edit: [false, {}] }))
+      .then(data =>
+        this.setState({ ...data, edit: { status: false, author: {} } })
+      )
       .catch(error => this.setState(error));
   }
 
-  formAuthor = (dados, callback) => {
-    this.carregaLista();
-    setTimeout(() => {
-      console.log(this.state.edit);
-    }, 500);
-    // callback("success");
-    // AuthorAPI.cadastrarAuthor(dados)
-    //   .then(() => {
-    //   })
-    //   .catch(error => console.log(error));
-  };
-
-  deleteAuthor = (id, callback) => {
-    AuthorAPI.deleteAuthor(id)
-      .then(resp => {
+  cadastraAuthor = (dados, callback) => {
+    AuthorAPI.cadastrarAuthor(dados)
+      .then(() => {
         this.carregaLista();
         callback("success");
       })
       .catch(error => console.log(error));
   };
 
-  editAuthor = (author, callback) => {
-    this.setState({ edit: [true, author] });
-    callback("success");
+  deleteAuthor = (id, callback) => {
+    AuthorAPI.deleteAuthor(id)
+      .then(() => {
+        this.carregaLista();
+        callback("success");
+      })
+      .catch(error => {
+        console.log(error);
+        callback("error");
+      });
+  };
 
-    // AuthorAPI.editAuthor(author).then(resp => {
-    //   callback(resp);
-    //   this.carregaLista();
-    // });
+  openEditAuthor = (edit, callback) => {
+    this.setState({ edit: { status: edit.status, author: edit.author } });
+  };
+
+  editAuthor = (author, callback) => {
+    if (author.name !== this.state.edit.author.name) {
+      AuthorAPI.editAuthor(author)
+        .then(() => {
+          this.carregaLista();
+          callback("success");
+        })
+        .catch(error => {
+          console.log(error);
+          callback("error");
+        });
+    } else {
+      callback("none");
+    }
   };
 
   pagination = () => {
@@ -107,12 +119,16 @@ export default class AuthorBox extends Component {
             lista={this.state}
             pagination={this.pagination}
             delete={this.deleteAuthor}
-            edit={this.editAuthor}
+            edit={this.openEditAuthor}
           />
         ) : null}
 
         {this.state.statusAPI !== "error" ? (
-          <FormAuthor formAuthor={this.formAuthor} edit={this.state.edit} />
+          <FormAuthor
+            cadastraAuthor={this.cadastraAuthor}
+            editAuthor={this.editAuthor}
+            edit={this.state.edit}
+          />
         ) : null}
       </div>
     );
@@ -122,32 +138,44 @@ export default class AuthorBox extends Component {
 class ListaAuthor extends Component {
   constructor() {
     super();
-    this.state = { optionsList: false, authorCheck: [] };
-    this.authorCheck = React.createRef();
+    this.state = { msg: "", edit: { status: false, author: {} } };
   }
 
-  nextPage = () => this.props.pagination().next();
-  prevPage = () => this.props.pagination().prev();
+  clear = () => {
+    this.setState({ msg: "", edit: { status: false, author: {} } });
+  };
+
+  nextPage = () => {
+    this.props.pagination().next();
+    this.clear();
+  };
+
+  prevPage = () => {
+    this.props.pagination().prev();
+    this.clear();
+  };
 
   showOptions = id => {
     this.setState({
-      optionsList: true,
-      authorCheck: this.props.lista.authors.filter(at => at.id === id)
+      edit: {
+        status: true,
+        author: this.props.lista.authors.filter(at => at.id === id)[0]
+      },
+      msg: ""
     });
   };
 
   editarAuthor = () => {
-    this.props.edit(this.state.authorCheck[0], resp => {
-      if (resp === "success") {
-        this.setState({ optionsList: false, authorCheck: [] });
-      }
-    });
+    this.props.edit(this.state.edit);
+    this.clear();
   };
 
   deleteAuthor = () => {
-    this.props.delete(this.state.authorCheck[0].id, resp => {
+    this.props.delete(this.state.edit.author.id, resp => {
       if (resp === "success") {
-        this.setState({ optionsList: false, authorCheck: [] });
+        this.clear();
+      } else {
+        this.setState({ msg: "Erro ao deletar" });
       }
     });
   };
@@ -161,18 +189,21 @@ class ListaAuthor extends Component {
           click={this.showOptions}
         />
         <div className="bottom-table">
-          {this.state.optionsList ? (
-            <p>{this.state.authorCheck[0].name}:</p>
-          ) : null}
-          <ButtonEditList
-            class={
-              this.state.optionsList ? "options-list show" : "options-list"
-            }
-            buttons={[
-              { class: "edit", name: "Editar", click: this.editarAuthor },
-              { class: "delete", name: "Deletar", click: this.deleteAuthor }
-            ]}
-          />
+          <div className="bottom-edit">
+            {this.state.edit.status ? (
+              <p>{this.state.edit.author.name}:</p>
+            ) : null}
+            <ButtonEditList
+              class={
+                this.state.edit.status ? "options-list show" : "options-list"
+              }
+              buttons={[
+                { class: "edit", name: "Editar", click: this.editarAuthor },
+                { class: "delete", name: "Deletar", click: this.deleteAuthor }
+              ]}
+            />
+            <span className="msg">{this.state.msg}</span>
+          </div>
 
           <ButtonPagination
             prev={this.props.lista.prev !== null ? this.prevPage : null}
@@ -194,51 +225,68 @@ class FormAuthor extends Component {
       name: "",
       maxInput: 50,
       msg: "",
-      edit: []
+      edit: false
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    const status = nextProps.edit[0];
-    const author = nextProps.edit;
-    if (status === true) {
-      this.setState({
-        name: author.name,
-        edit: author,
-        button: "Editar",
-        titleOperation: "Editar Autor"
-      });
-      this.toggleForm();
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.edit.status) {
+      this.setState({ edit: true });
     }
   }
 
-  toggleForm = () => {
-    if (this.state.window) {
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.edit && !prevState.edit)
       this.setState({
         window: !this.state.window,
-        name: "",
-        titleOperation: "Cadastro Autor",
-        button: "Cadastrar",
-        edit: []
+        name: this.props.edit.author.name,
+        button: "Editar",
+        titleOperation: "Editar Autor"
       });
-    } else {
-      this.setState({ window: !this.state.window });
-    }
+  }
+
+  toggleForm = () => {
+    this.setState({
+      window: !this.state.window,
+      name: "",
+      titleOperation: "Cadastro Autor",
+      button: "Cadastrar",
+      edit: false,
+      msg: ""
+    });
   };
 
   formAuthor = event => {
     event.preventDefault();
-    if (this.state.edit[0] === true) {
-      console.log("editado!");
-      this.toggleForm();
+    if (this.state.edit === true) {
+      this.props.editAuthor(
+        { id: this.props.edit.author.id, name: this.state.name },
+        result => {
+          switch (result) {
+            case "success":
+              this.toggleForm();
+              break;
+
+            case "none":
+              this.setState({ msg: "Nada foi alterado!" });
+              break;
+
+            case "error":
+              this.setState({ msg: "Erro ao editar Autor" });
+              break;
+
+            default:
+              break;
+          }
+        }
+      );
     } else {
-      console.log("cadastro!");
-      this.props.formAuthor({ name: this.state.name }, result => {
-        // if (result === "success") {
-        //   this.toggleForm();
-        // } else {
-        //   this.setState({ msg: "Erro ao cadastrar Autor" });
-        // }
+      this.props.cadastraAuthor({ name: this.state.name }, result => {
+        if (result === "success") {
+          this.toggleForm();
+        } else {
+          this.setState({ msg: "Erro ao cadastrar Autor" });
+        }
       });
     }
   };

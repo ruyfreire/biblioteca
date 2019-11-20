@@ -71,9 +71,9 @@ export default class AuthorAPI {
       })
         .then(resp => {
           if (resp.ok) {
-            resolve("Deletado com sucesso!");
+            resolve();
           } else {
-            reject("Problema ao deletar Autor");
+            reject();
           }
         })
         .catch(error => {
@@ -90,14 +90,15 @@ export default class AuthorAPI {
         headers: new Headers({
           "Content-Type": "application/json"
         }),
-        body: JSON.stringify(author.name)
+        body: JSON.stringify({ name: author.name })
       })
         .then(resp => {
-          console.log(resp);
-          resolve();
-          // resp.json().then(data => {
-          //   resolve(data);
-          // });
+          if (resp.ok) {
+            console.log(resp);
+            resolve();
+          } else {
+            reject(resp.statusText);
+          }
         })
         .catch(error => {
           console.log(error);
