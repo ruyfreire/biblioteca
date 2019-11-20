@@ -1,0 +1,14 @@
+// fontes
+@import url("https://fonts.googleapis.com/css?family=Baloo|Montserrat&display=swap");
+
+// redefine algumas propriedades padrões do navegador
+@import "reset";
+
+// variaveis do projeto
+@import "variables";
+
+// menu e box container
+@import "base";
+
+// box de conteúdo
+@import "box-listagem";

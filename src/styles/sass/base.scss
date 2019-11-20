@@ -1,0 +1,143 @@
+/* Base */
+
+html,
+body,
+#root {
+  height: 100%;
+  font-size: 16px;
+  font-family: $font-base;
+}
+
+.app-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+aside {
+  position: relative;
+  background-color: $primary-color;
+  .aside-container {
+    height: 100%;
+    padding: 10px;
+  }
+
+  ul {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    overflow: hidden;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+  }
+
+  a {
+    display: flex;
+    align-items: flex-end;
+    font-family: $font-title;
+    color: $secondary-color;
+    opacity: 0.5;
+    text-transform: uppercase;
+    font-size: 0;
+    letter-spacing: 1px;
+    font-weight: bold;
+    white-space: nowrap;
+
+    &:before {
+      content: "";
+      font-family: $font-icons;
+      font-weight: 900;
+      font-size: 1.5rem;
+    }
+
+    &:hover,
+    &:active {
+      opacity: 1;
+    }
+  }
+  .menu {
+    display: none;
+
+    a {
+      font-size: 0;
+      &:before {
+        content: "\f0c9";
+        font-size: 2.5rem;
+      }
+    }
+  }
+  .home a:before {
+    content: "\f015";
+  }
+  .authors a:before {
+    content: "\f406";
+  }
+  .books a:before {
+    content: "\f02d";
+  }
+  .search a:before {
+    content: "\f00b";
+  }
+}
+
+main {
+  background-color: $secondary-color;
+  flex-grow: 1;
+  height: 100%;
+
+  h1 {
+    text-align: center;
+    padding: 20px;
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .app-container {
+    flex-direction: row;
+  }
+
+  aside {
+    width: 60px;
+    padding-top: 20px;
+    transition: all 0.3s ease-in-out;
+
+    &.open {
+      width: 200px;
+
+      li a {
+        font-size: 0.8em;
+      }
+    }
+
+    ul {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    li {
+      flex-grow: 1;
+
+      a {
+        padding-left: 45px;
+        line-height: 35px;
+        position: relative;
+
+        &:before {
+          position: absolute;
+          left: 0;
+          font-size: 2rem;
+        }
+      }
+
+      &.menu {
+        display: flex;
+        align-items: flex-start;
+        flex-grow: 1.5;
+      }
+    }
+  }
+}
