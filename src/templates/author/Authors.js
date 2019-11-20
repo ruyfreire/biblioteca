@@ -28,30 +28,34 @@ export default class AuthorBox extends Component {
 
   carregaLista(url) {
     AuthorAPI.listar(url)
-      .then(data => this.setState(data))
+      .then(data => this.setState({ ...data, edit: [false, {}] }))
       .catch(error => this.setState(error));
   }
 
-  cadastraAuthor = (dados, callback) => {
-    AuthorAPI.cadastrarAuthor(dados)
-      .then(() => {
+  formAuthor = (dados, callback) => {
+    this.carregaLista();
+    setTimeout(() => {
+      console.log(this.state.edit);
+    }, 500);
+    // callback("success");
+    // AuthorAPI.cadastrarAuthor(dados)
+    //   .then(() => {
+    //   })
+    //   .catch(error => console.log(error));
+  };
+
+  deleteAuthor = (id, callback) => {
+    AuthorAPI.deleteAuthor(id)
+      .then(resp => {
         this.carregaLista();
         callback("success");
       })
       .catch(error => console.log(error));
   };
 
-  deleteAuthor = (id, callback) => {
-    AuthorAPI.deleteAuthor(id)
-      .then(resp => {
-        callback(resp);
-        this.carregaLista();
-      })
-      .catch(error => console.log(error));
-  };
-
   editAuthor = (author, callback) => {
     this.setState({ edit: [true, author] });
+    callback("success");
 
     // AuthorAPI.editAuthor(author).then(resp => {
     //   callback(resp);
@@ -107,11 +111,8 @@ export default class AuthorBox extends Component {
           />
         ) : null}
 
-        {this.state.statusAPI === "success" ? (
-          <CadastraAuthor
-            cadastraAuthor={this.cadastraAuthor}
-            edit={this.state.edit}
-          />
+        {this.state.statusAPI !== "error" ? (
+          <FormAuthor formAuthor={this.formAuthor} edit={this.state.edit} />
         ) : null}
       </div>
     );
@@ -137,13 +138,17 @@ class ListaAuthor extends Component {
 
   editarAuthor = () => {
     this.props.edit(this.state.authorCheck[0], resp => {
-      this.setState({ optionsList: false, authorCheck: [] });
+      if (resp === "success") {
+        this.setState({ optionsList: false, authorCheck: [] });
+      }
     });
   };
 
   deleteAuthor = () => {
     this.props.delete(this.state.authorCheck[0].id, resp => {
-      this.setState({ optionsList: false, authorCheck: [] });
+      if (resp === "success") {
+        this.setState({ optionsList: false, authorCheck: [] });
+      }
     });
   };
 
@@ -179,13 +184,13 @@ class ListaAuthor extends Component {
   }
 }
 
-class CadastraAuthor extends Component {
+class FormAuthor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      type: "Cadastrar",
+      button: "Cadastrar",
       titleOperation: "Cadastrar Autor",
-      window: this.props.edit[0],
+      window: false,
       name: "",
       maxInput: 50,
       msg: "",
@@ -194,24 +199,26 @@ class CadastraAuthor extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.edit[0] === true) {
+    const status = nextProps.edit[0];
+    const author = nextProps.edit;
+    if (status === true) {
       this.setState({
-        name: nextProps.edit[1].name,
-        edit: nextProps.edit,
-        type: "Editar",
+        name: author.name,
+        edit: author,
+        button: "Editar",
         titleOperation: "Editar Autor"
       });
-      this.openCadastro();
+      this.toggleForm();
     }
   }
 
-  openCadastro = () => {
+  toggleForm = () => {
     if (this.state.window) {
       this.setState({
         window: !this.state.window,
         name: "",
         titleOperation: "Cadastro Autor",
-        type: "Cadastrar",
+        button: "Cadastrar",
         edit: []
       });
     } else {
@@ -219,17 +226,19 @@ class CadastraAuthor extends Component {
     }
   };
 
-  cadastraAuthor = event => {
+  formAuthor = event => {
     event.preventDefault();
     if (this.state.edit[0] === true) {
-      console.log(this.state.edit);
+      console.log("editado!");
+      this.toggleForm();
     } else {
-      this.props.cadastraAuthor({ name: this.state.name }, result => {
-        if (result === "success") {
-          this.setState({ input: false, name: "" });
-        } else {
-          this.setState({ msg: "Erro ao cadastrar Autor" });
-        }
+      console.log("cadastro!");
+      this.props.formAuthor({ name: this.state.name }, result => {
+        // if (result === "success") {
+        //   this.toggleForm();
+        // } else {
+        //   this.setState({ msg: "Erro ao cadastrar Autor" });
+        // }
       });
     }
   };
@@ -251,12 +260,12 @@ class CadastraAuthor extends Component {
               : "box-cadastro-container"
           }
         >
-          <div className="btn-cadastro" onClick={this.openCadastro}>
+          <div className="btn-cadastro" onClick={this.toggleForm}>
             <span>Abrir</span>
           </div>
           <h3 className="box-title">{this.state.titleOperation}</h3>
           <div className="box-form">
-            <form onSubmit={this.cadastraAuthor} method="post">
+            <form onSubmit={this.formAuthor} method="post">
               <Input
                 id={"name"}
                 label={"Nome:"}
@@ -269,7 +278,7 @@ class CadastraAuthor extends Component {
               <span className="msg">{this.state.msg}</span>
               <ButtonOpen
                 type={"submit"}
-                value={this.state.type}
+                value={this.state.button}
                 disabled={this.state.name.trim().length === 0 ? "disabled" : ""}
               />
             </form>
