@@ -1,0 +1,50 @@
+.box-listagem {
+  height: 100%;
+  overflow: hidden;
+  padding: 0 10px;
+  position: relative;
+
+  .msg-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50%;
+    padding: 10px;
+    color: $error;
+    font-size: 0.8em;
+    font-weight: bold;
+  }
+
+  .box-list {
+    height: 100%;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .bottom-table {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 5px 0;
+      width: 100%;
+      min-height: 50px;
+    }
+
+    .bottom-edit {
+      flex-grow: 1;
+
+      p {
+        display: inline-block;
+      }
+
+      .msg {
+        color: $error;
+        font-size: 0.8em;
+        font-weight: bold;
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import * as serviceWorker from "./serviceWorker";
 
-import "./styles/css/index.css";
+import "./styles/index.scss";
 import Rotas from "./routes/routes";
 
 ReactDOM.render(<Rotas />, document.getElementById("root"));

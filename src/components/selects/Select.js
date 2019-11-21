@@ -1,16 +1,5 @@
 import React, { Component } from "react";
 
-export class Input extends Component {
-  render() {
-    return (
-      <label htmlFor={this.props.id}>
-        <span className="input-title">{this.props.label}</span>
-        <input {...this.props} />
-      </label>
-    );
-  }
-}
-
 export class Select extends Component {
   render() {
     return (
@@ -35,5 +24,3 @@ export class Select extends Component {
     );
   }
 }
-
-export default null;

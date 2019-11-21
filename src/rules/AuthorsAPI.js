@@ -1,13 +1,4 @@
 export default class AuthorAPI {
-  static ordenarLista(lista) {
-    lista.sort((a, b) => {
-      if (a.id > b.id) return -1;
-      if (a.id < b.id) return 1;
-      return 0;
-    });
-    return lista;
-  }
-
   static listar(url = null) {
     if (url === null) url = "http://localhost:8000/v1/author/";
 
@@ -27,7 +18,7 @@ export default class AuthorAPI {
                   count: data.count,
                   next: data.next,
                   prev: data.previous,
-                  authors: AuthorAPI.ordenarLista(data.results),
+                  authors: data.results,
                   statusAPI: "success"
                 });
               }
@@ -85,7 +76,7 @@ export default class AuthorAPI {
 
   static editAuthor(author) {
     return new Promise((resolve, reject) => {
-      fetch(`http://localhost:8000/v1/author/${author.id}`, {
+      fetch(`http://localhost:8000/v1/author/${author.id}/`, {
         method: "PUT",
         headers: new Headers({
           "Content-Type": "application/json"

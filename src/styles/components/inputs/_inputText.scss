@@ -1,0 +1,20 @@
+.input-title {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input {
+  width: 100%;
+  outline: 0;
+  border: 1px solid #000;
+  padding: 5px 10px;
+  margin-bottom: 2px;
+  line-height: 1.5em;
+}
+
+.msg {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.7em;
+  color: $error;
+}

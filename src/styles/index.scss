@@ -1,0 +1,30 @@
+// fontes
+@import url("https://fonts.googleapis.com/css?family=Baloo|Montserrat&display=swap");
+
+// redefine algumas propriedades padrões do navegador
+@import "reset";
+
+// variaveis do projeto
+@import "variables";
+
+// menu e box container
+@import "base";
+
+// ######  box de listar, editar, cadastrar   #######
+@import "templates/box-list/box-lists";
+
+// botões listagem
+@import "components/buttons/buttonEditList";
+@import "components/buttons/buttonPagination";
+
+// tabela listagem
+@import "components/tables/table-list";
+
+// ######   box cadatrar e editar   ######
+@import "templates/box-cadastro/box-form.scss";
+
+// inputs formulario
+@import "components/inputs/inputText";
+
+// botoes formulario
+@import "components/buttons/buttonConfirm";
