@@ -8,6 +8,7 @@ export default class TableList extends Component {
         itens.push(<td key={linha[item]}>{linha[item]}</td>);
       }
     }
+
     return itens;
   };
 

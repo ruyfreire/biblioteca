@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import TableList from "../../components/tables/TableList";
+import TableList from "../../components/tables/tableList";
 import DetailsList from "../../components/tables/DetailsList";
 import ButtonPagination from "../../components/buttons/buttonPagination";
 import ButtonEditList from "../../components/buttons/buttonEditList";
