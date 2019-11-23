@@ -1,6 +1,7 @@
 export default class AuthorAPI {
   static listar(url = null) {
-    if (url === null) url = "http://localhost:8000/v1/author/";
+    if (url === null)
+      url = "https://api-bibliotecaruy.herokuapp.com/v1/author/";
 
     return new Promise((resolve, reject) => {
       // setTimeout(() => {
@@ -36,7 +37,7 @@ export default class AuthorAPI {
 
   static cadastrarAuthor(dados) {
     return new Promise((resolve, reject) => {
-      fetch("http://localhost:8000/v1/author/", {
+      fetch("https://api-bibliotecaruy.herokuapp.com/v1/author/", {
         method: "POST",
         headers: new Headers({
           "Content-Type": "application/json"
@@ -57,7 +58,7 @@ export default class AuthorAPI {
 
   static deleteAuthor(id) {
     return new Promise((resolve, reject) => {
-      fetch(`http://localhost:8000/v1/author/${id}`, {
+      fetch(`https://api-bibliotecaruy.herokuapp.com/v1/author/${id}`, {
         method: "DELETE"
       })
         .then(resp => {
@@ -76,7 +77,7 @@ export default class AuthorAPI {
 
   static editAuthor(author) {
     return new Promise((resolve, reject) => {
-      fetch(`http://localhost:8000/v1/author/${author.id}/`, {
+      fetch(`https://api-bibliotecaruy.herokuapp.com/v1/author/${author.id}/`, {
         method: "PUT",
         headers: new Headers({
           "Content-Type": "application/json"

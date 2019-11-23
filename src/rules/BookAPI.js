@@ -1,6 +1,6 @@
 export default class BookAPI {
   static listar(url = null) {
-    if (url === null) url = "http://localhost:8000/v1/book/";
+    if (url === null) url = "https://api-bibliotecaruy.herokuapp.com/v1/book/";
 
     return new Promise((resolve, reject) => {
       fetch(url)
@@ -32,7 +32,7 @@ export default class BookAPI {
 
   static cadastrar(dados) {
     return new Promise((resolve, reject) => {
-      fetch("http://localhost:8000/v1/book/", {
+      fetch("https://api-bibliotecaruy.herokuapp.com/v1/book/", {
         method: "POST",
         headers: new Headers({
           "Content-Type": "application/json"
@@ -53,7 +53,7 @@ export default class BookAPI {
 
   static delete(id) {
     return new Promise((resolve, reject) => {
-      fetch(`http://localhost:8000/v1/book/${id}`, {
+      fetch(`https://api-bibliotecaruy.herokuapp.com/v1/book/${id}`, {
         method: "DELETE"
       })
         .then(resp => {
@@ -72,7 +72,7 @@ export default class BookAPI {
 
   static edit(book) {
     return new Promise((resolve, reject) => {
-      fetch(`http://localhost:8000/v1/book/${book.id}`, {
+      fetch(`https://api-bibliotecaruy.herokuapp.com/v1/book/${book.id}`, {
         method: "PUT",
         headers: new Headers({
           "Content-Type": "application/json"

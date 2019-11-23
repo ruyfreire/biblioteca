@@ -26,9 +26,6 @@ export default class App extends Component {
               <li className="books">
                 <Link to={"/books"}>Livros</Link>
               </li>
-              <li className="search">
-                <Link to={"/"}>Busca detalhada</Link>
-              </li>
             </ul>
           </div>
         </aside>

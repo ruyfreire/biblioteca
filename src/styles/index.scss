@@ -28,3 +28,12 @@
 
 // botoes formulario
 @import "components/buttons/buttonConfirm";
+
+// pagina de manutenção
+@import "templates/any-pages/page-working";
+
+// pagina nao encontrada
+@import "templates/any-pages/page-notfound";
+
+// home
+@import "templates/home/home.scss";
