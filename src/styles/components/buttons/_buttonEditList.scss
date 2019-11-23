@@ -18,19 +18,14 @@
     margin: 0 5px;
     cursor: pointer;
 
-    &:before {
-      font-family: $font-icons;
-      font-weight: 900;
-      font-size: 1rem;
+    i {
+      font-size: 0.8rem;
       color: #fff;
     }
   }
 
   .edit {
     background-color: #34eb58;
-    &:before {
-      content: "\f044";
-    }
     &:hover {
       background-color: darken(#34eb58, 10%);
     }
@@ -38,9 +33,6 @@
 
   .delete {
     background-color: #eb5c34;
-    &:before {
-      content: "\f2ed";
-    }
     &:hover {
       background-color: darken(#eb5c34, 10%);
     }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import TableList from "../../components/tables/tableList";
+import TableList from "../../components/tables/TableList";
 import ButtonPagination from "../../components/buttons/buttonPagination";
 import ButtonEditList from "../../components/buttons/buttonEditList";
 
@@ -40,13 +40,10 @@ export default class ListAuthor extends Component {
   };
 
   deleteAuthor = () => {
-    this.props.delete(this.state.edit.author.id, resp => {
-      if (resp === "success") {
-        this.clear();
-      } else {
-        this.setState({ msg: "Erro ao deletar" });
-      }
-    });
+    this.props
+      .delete(this.state.edit.author.id)
+      .then(() => this.clear())
+      .catch(() => this.setState({ msg: "Erro ao deletar" }));
   };
 
   render() {
@@ -67,8 +64,18 @@ export default class ListAuthor extends Component {
                 this.state.edit.status ? "options-list show" : "options-list"
               }
               buttons={[
-                { class: "edit", name: "Editar", click: this.editarAuthor },
-                { class: "delete", name: "Deletar", click: this.deleteAuthor }
+                {
+                  class: "edit",
+                  icon: "fas fa-edit",
+                  name: "Editar",
+                  click: this.editarAuthor
+                },
+                {
+                  class: "delete",
+                  icon: "fas fa-trash-alt",
+                  name: "Deletar",
+                  click: this.deleteAuthor
+                }
               ]}
             />
             <span className="msg">{this.state.msg}</span>

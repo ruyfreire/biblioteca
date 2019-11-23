@@ -12,6 +12,7 @@ export default class ButtonEditList extends Component {
               title={btn.name}
               onClick={btn.click}
             >
+              <i className={btn.icon}></i>
               {btn.name}
             </div>
           );

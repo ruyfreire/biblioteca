@@ -15,16 +15,24 @@ export default class App extends Component {
           <div className="aside-container">
             <ul>
               <li className="menu" onClick={this.open}>
-                <a href=" #">Menu</a>
+                <a href=" #">
+                  <i className="fas fa-bars"></i>Menu
+                </a>
               </li>
               <li className="home">
-                <Link to={"/"}>Home</Link>
+                <Link to={"/"}>
+                  <i className="fas fa-home"></i>Home
+                </Link>
               </li>
               <li className="authors">
-                <Link to={"/authors"}>Autores</Link>
+                <Link to={"/authors"}>
+                  <i className="fas fa-user"></i>Autores
+                </Link>
               </li>
               <li className="books">
-                <Link to={"/books"}>Livros</Link>
+                <Link to={"/books"}>
+                  <i className="fas fa-book"></i>Livros
+                </Link>
               </li>
             </ul>
           </div>

@@ -47,35 +47,23 @@ export default class FormAuthor extends Component {
   formAuthor = event => {
     event.preventDefault();
     if (this.state.edit === true) {
-      this.props.editAuthor(
-        { id: this.props.edit.author.id, name: this.state.name },
-        result => {
-          switch (result) {
-            case "success":
-              this.toggleForm();
-              break;
-
-            case "none":
-              this.setState({ msg: "Nada foi alterado!" });
-              break;
-
-            case "error":
-              this.setState({ msg: "Erro ao editar Autor" });
-              break;
-
-            default:
-              break;
-          }
-        }
-      );
+      if (this.state.name === this.props.edit.author.name) {
+        this.setState({ msg: "Nada foi alterado!" });
+      } else {
+        this.props
+          .editAuthor({ id: this.props.edit.author.id, name: this.state.name })
+          .then(() => this.toggleForm())
+          .catch(() => this.setState({ msg: "Erro ao editar Autor" }));
+      }
     } else {
-      this.props.cadastraAuthor({ name: this.state.name }, result => {
-        if (result === "success") {
+      this.props
+        .cadastraAuthor({ name: this.state.name })
+        .then(() => {
           this.toggleForm();
-        } else {
+        })
+        .catch(error => {
           this.setState({ msg: "Erro ao cadastrar Autor" });
-        }
-      });
+        });
     }
   };
 
@@ -96,8 +84,12 @@ export default class FormAuthor extends Component {
               : "box-cadastro-container"
           }
         >
-          <div className="btn-cadastro" onClick={this.toggleForm}>
-            <span>Abrir</span>
+          <div
+            className={this.state.window ? "btn-open open" : "btn-open"}
+            onClick={this.toggleForm}
+          >
+            <i className="fas fa-plus"></i>
+            Abrir
           </div>
 
           <h3 className="box-title">{this.state.titleOperation}</h3>

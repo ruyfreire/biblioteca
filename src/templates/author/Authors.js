@@ -21,54 +21,53 @@ export default class AuthorBox extends Component {
     this.carregaLista();
   }
 
-  carregaLista(url) {
+  carregaLista = url => {
     AuthorAPI.listar(url)
       .then(data =>
         this.setState({ ...data, edit: { status: false, author: {} } })
       )
       .catch(error => this.setState(error));
-  }
-
-  cadastraAuthor = (dados, callback) => {
-    AuthorAPI.cadastrarAuthor(dados)
-      .then(() => {
-        this.carregaLista();
-        callback("success");
-      })
-      .catch(error => console.log(error));
   };
 
-  deleteAuthor = (id, callback) => {
-    AuthorAPI.deleteAuthor(id)
+  cadastraAuthor = dados => {
+    const result = AuthorAPI.cadastrar(dados);
+    result
       .then(() => {
         this.carregaLista();
-        callback("success");
+      })
+      .catch(error => console.log(error));
+    return result;
+  };
+
+  deleteAuthor = id => {
+    const resp = AuthorAPI.delete(id);
+    resp
+      .then(() => {
+        this.carregaLista();
       })
       .catch(error => {
         console.log(error);
-        callback("error");
       });
+    return resp;
   };
 
-  openEditAuthor = (edit, callback) => {
+  openEditAuthor = edit => {
     this.setState({ edit: { status: edit.status, author: edit.author } });
   };
 
-  editAuthor = (author, callback) => {
-    if (author.name !== this.state.edit.author.name) {
-      AuthorAPI.editAuthor(author)
-        .then(() => {
-          this.carregaLista();
-          callback("success");
-        })
-        .catch(error => {
-          console.log(error);
-          callback("error");
-        });
-    } else {
-      callback("none");
-    }
+  editAuthor = author => {
+    const result = AuthorAPI.edit(author);
+    result
+      .then(() => {
+        this.carregaLista();
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    return result;
   };
+
+  listBooks = id => {};
 
   pagination = () => {
     return {
@@ -79,7 +78,7 @@ export default class AuthorBox extends Component {
     };
   };
 
-  loading(status) {
+  loading = status => {
     switch (this.state.statusAPI) {
       case "empty":
         return status.load;
@@ -90,7 +89,7 @@ export default class AuthorBox extends Component {
       default:
         return status.load;
     }
-  }
+  };
 
   render() {
     return (

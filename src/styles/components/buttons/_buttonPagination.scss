@@ -13,9 +13,7 @@
     padding: 5px;
     background-color: $primary-color;
 
-    &:before {
-      font-family: $font-icons;
-      font-weight: 900;
+    i {
       color: #fff;
       font-size: 1rem;
     }
@@ -36,16 +34,10 @@
   .prev {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
-    &:before {
-      content: "\f0d9";
-    }
   }
   .next {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     border-left: 1px solid $secondary-color;
-    &:before {
-      content: "\f0da";
-    }
   }
 }

@@ -35,6 +35,17 @@ aside {
     align-items: center;
   }
 
+  li,
+  a,
+  i {
+    -webkit-touch-callout: none; /* iPhone OS, Safari */
+    -webkit-user-select: none; /* Chrome, Safari 3 */
+    -khtml-user-select: none; /* Safari 2 */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    user-select: none;
+  }
+
   a {
     display: flex;
     align-items: flex-end;
@@ -47,10 +58,7 @@ aside {
     font-weight: bold;
     white-space: nowrap;
 
-    &:before {
-      content: "";
-      font-family: $font-icons;
-      font-weight: 900;
+    i {
       font-size: 1.5rem;
     }
 
@@ -64,20 +72,11 @@ aside {
 
     a {
       font-size: 0;
-      &:before {
-        content: "\f0c9";
+
+      i {
         font-size: 2.5rem;
       }
     }
-  }
-  .home a:before {
-    content: "\f015";
-  }
-  .authors a:before {
-    content: "\f406";
-  }
-  .books a:before {
-    content: "\f02d";
   }
 }
 
@@ -88,7 +87,7 @@ main {
 
   h1 {
     text-align: center;
-    padding: 20px;
+    padding: 10px;
   }
 }
 
@@ -123,7 +122,7 @@ main {
         line-height: 35px;
         position: relative;
 
-        &:before {
+        i {
           position: absolute;
           left: 0;
           font-size: 2rem;
