@@ -67,7 +67,11 @@ export default class AuthorBox extends Component {
     return result;
   };
 
-  listBooks = id => {};
+  listBooks = id => {
+    return AuthorAPI.listarBooks(id);
+    // const result = AuthorAPI.listarBooks(id);
+    // result.then(resp => {}).catch(error => console.log(error));
+  };
 
   pagination = () => {
     return {
@@ -114,6 +118,7 @@ export default class AuthorBox extends Component {
             pagination={this.pagination}
             delete={this.deleteAuthor}
             edit={this.openEditAuthor}
+            books={this.listBooks}
           />
         ) : null}
 

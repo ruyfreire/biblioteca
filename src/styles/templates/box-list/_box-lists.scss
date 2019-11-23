@@ -16,7 +16,7 @@
   }
 
   .box-list {
-    height: 100%;
+    height: 80%;
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
@@ -34,6 +34,8 @@
     }
 
     .bottom-edit {
+      display: flex;
+      align-items: center;
       flex-grow: 1;
 
       p {

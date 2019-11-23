@@ -1,0 +1,50 @@
+.details-list {
+  width: 100%;
+  max-height: 100%;
+  border-radius: 5px;
+  border: 1px solid #000;
+  overflow: hidden;
+
+  .list-title {
+    background-color: $primary-color;
+    color: #fff;
+    font-size: 1em;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 10px;
+    margin-bottom: 1px;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+
+  ul {
+    overflow: auto;
+    height: calc(100% - 40px);
+  }
+
+  li {
+    padding: 5px;
+    background-color: #fff;
+    border-top: 1px solid #000;
+
+    &:first-child {
+      border: 0;
+    }
+  }
+
+  .title-book {
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .summary-book {
+    font-size: 0.8em;
+    line-height: 1.4;
+  }
+
+  .empty {
+    color: $error;
+    text-align: center;
+  }
+}

@@ -4,10 +4,6 @@ export default class AuthorAPI {
       url = "https://api-bibliotecaruy.herokuapp.com/v1/author/";
 
     return new Promise((resolve, reject) => {
-      // setTimeout(() => {
-      //   resolve({ statusAPI: "error" });
-      // }, 2000);
-
       fetch(url)
         .then(resp => {
           if (resp.ok) {
@@ -35,7 +31,7 @@ export default class AuthorAPI {
     });
   }
 
-  static cadastrarAuthor(dados) {
+  static cadastrar(dados) {
     return new Promise((resolve, reject) => {
       fetch("https://api-bibliotecaruy.herokuapp.com/v1/author/", {
         method: "POST",
@@ -56,7 +52,7 @@ export default class AuthorAPI {
     });
   }
 
-  static deleteAuthor(id) {
+  static delete(id) {
     return new Promise((resolve, reject) => {
       fetch(`https://api-bibliotecaruy.herokuapp.com/v1/author/${id}`, {
         method: "DELETE"
@@ -75,7 +71,7 @@ export default class AuthorAPI {
     });
   }
 
-  static editAuthor(author) {
+  static edit(author) {
     return new Promise((resolve, reject) => {
       fetch(`https://api-bibliotecaruy.herokuapp.com/v1/author/${author.id}/`, {
         method: "PUT",
@@ -86,11 +82,24 @@ export default class AuthorAPI {
       })
         .then(resp => {
           if (resp.ok) {
-            console.log(resp);
             resolve();
           } else {
             reject(resp.statusText);
           }
+        })
+        .catch(error => {
+          console.log(error);
+          reject(error);
+        });
+    });
+  }
+
+  static listarBooks(id) {
+    return new Promise((resolve, reject) => {
+      fetch(`https://api-bibliotecaruy.herokuapp.com/v1/author/${id}/book/`)
+        .then(resp => resp.json())
+        .then(data => {
+          resolve(data);
         })
         .catch(error => {
           console.log(error);

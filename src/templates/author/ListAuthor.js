@@ -1,17 +1,26 @@
 import React, { Component } from "react";
 
 import TableList from "../../components/tables/TableList";
+import DetailsList from "../../components/tables/DetailsList";
 import ButtonPagination from "../../components/buttons/buttonPagination";
 import ButtonEditList from "../../components/buttons/buttonEditList";
 
 export default class ListAuthor extends Component {
   constructor() {
     super();
-    this.state = { msg: "", edit: { status: false, author: {} } };
+    this.state = {
+      msg: "",
+      edit: { status: false, author: {} },
+      listBooks: []
+    };
   }
 
   clear = () => {
-    this.setState({ msg: "", edit: { status: false, author: {} } });
+    this.setState({
+      msg: "",
+      edit: { status: false, author: {} },
+      listBooks: []
+    });
   };
 
   nextPage = () => {
@@ -25,13 +34,22 @@ export default class ListAuthor extends Component {
   };
 
   showOptions = id => {
-    this.setState({
+    let att = {
       edit: {
         status: true,
         author: this.props.lista.authors.filter(at => at.id === id)[0]
       },
       msg: ""
-    });
+    };
+    this.props
+      .books(id)
+      .then(data => {
+        att.listBooks = data;
+        this.setState(att);
+      })
+      .catch(() => {
+        this.setState(att);
+      });
   };
 
   editarAuthor = () => {
@@ -86,6 +104,10 @@ export default class ListAuthor extends Component {
             next={this.props.lista.next !== null ? this.nextPage : null}
           />
         </div>
+
+        {this.state.edit.status ? (
+          <DetailsList list={this.state.listBooks} />
+        ) : null}
       </div>
     );
   }

@@ -17,8 +17,11 @@
 @import "components/buttons/buttonEditList";
 @import "components/buttons/buttonPagination";
 
-// tabela listagem
+// tabela de listagem
 @import "components/tables/table-list";
+
+// details de livros na listagem de autores
+@import "components/tables/detail-list";
 
 // ######   box cadatrar e editar   ######
 @import "templates/box-cadastro/box-form.scss";
