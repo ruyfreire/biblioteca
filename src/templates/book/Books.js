@@ -13,12 +13,14 @@ export default class BookBox extends Component {
       prev: null,
       books: [{}],
       statusAPI: null,
-      edit: { status: false, book: {} }
+      edit: { status: false, book: {} },
+      authors: []
     };
   }
 
   componentDidMount() {
     this.carregaLista();
+    this.carregaAuthor();
   }
 
   carregaLista(url) {
@@ -28,6 +30,12 @@ export default class BookBox extends Component {
       )
       .catch(error => this.setState(error));
   }
+
+  carregaAuthor = () => {
+    BookAPI.listarAuthors()
+      .then(data => this.setState({ authors: data }))
+      .catch(error => this.setState(error));
+  };
 
   cadastra = (dados, callback) => {
     BookAPI.cadastrar(dados)
@@ -123,6 +131,7 @@ export default class BookBox extends Component {
             cadastra={this.cadastra}
             edit={this.edit}
             edited={this.state.edit}
+            authors={this.state.authors}
           />
         ) : null}
       </div>

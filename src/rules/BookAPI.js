@@ -93,4 +93,40 @@ export default class BookAPI {
         });
     });
   }
+
+  static listarAuthors() {
+    // return new Promise((resolve, reject) => {
+    //   let nextPage = "";
+    //   let authores = [];
+    //   while(nextPage !== null) {
+    //     let [authores, next] = this.pages(
+    //       "https://api-bibliotecaruy.herokuapp.com/v1/author/"
+    //     )
+    //     .then((authores, next) => {
+    //       nextPage = next;
+    //       authores.push(...authores);
+    //     })
+    //   }
+    //   resolve(authores);
+    // });
+  }
+
+  pages(url) {
+    // return new Promise((resolve, reject) => {
+    //   fetch(url)
+    //     .then(resp => {
+    //       if (resp.ok) {
+    //         resp.json().then(data => {
+    //           return data.results
+    //         });
+    //       } else {
+    //         throw new Error("Erro ao buscar autores da API!");
+    //       }
+    //     })
+    //     .catch(error => {
+    //       console.log(error);
+    //       reject(error);
+    //     });
+    // });
+  }
 }

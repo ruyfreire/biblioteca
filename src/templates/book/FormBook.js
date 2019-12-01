@@ -14,7 +14,9 @@ export default class FormBook extends Component {
       summary: "",
       maxName: 30,
       maxSummary: 300,
-      msg: "",
+      selectAuthor: 0,
+      msgInput: "",
+      msgTextArea: "",
       edited: false
     };
   }
@@ -30,6 +32,8 @@ export default class FormBook extends Component {
       this.setState({
         window: !this.state.window,
         name: this.props.edited.book.name,
+        summary: this.props.edited.book.summary,
+        selectAuthor: this.props.edited.book.author[0],
         button: "Editar",
         titleOperation: "Editar Livro"
       });
@@ -39,6 +43,8 @@ export default class FormBook extends Component {
     this.setState({
       window: !this.state.window,
       name: "",
+      summary: "",
+      selectAuthor: 0,
       titleOperation: "Cadastro Livro",
       button: "Cadastrar",
       edited: false,
@@ -81,11 +87,24 @@ export default class FormBook extends Component {
     }
   };
 
-  inputName = evento => {
-    this.setState({ name: evento.target.value, msg: "" });
-    if (evento.target.value.length === this.state.maxName) {
-      this.setState({ msg: `Máximo de ${this.state.maxName} caractéres` });
+  inputName = e => {
+    this.setState({ name: e.target.value, msgInput: "" });
+    if (e.target.value.length === this.state.maxName) {
+      this.setState({ msgInput: `Máximo de ${this.state.maxName} caractéres` });
     }
+  };
+
+  inputSummary = e => {
+    this.setState({ summary: e.target.value, msgTextArea: "" });
+    if (e.target.value.length === this.state.maxSummary) {
+      this.setState({
+        msgTextArea: `Máximo de ${this.state.maxSummary} caractéres`
+      });
+    }
+  };
+
+  changeAuthor = e => {
+    this.setState({ selectAuthor: e.target.value });
   };
 
   render() {
@@ -94,12 +113,16 @@ export default class FormBook extends Component {
         <div
           className={
             this.state.window
-              ? "box-cadastro-container open"
-              : "box-cadastro-container"
+              ? "box-cadastro-container book open"
+              : "box-cadastro-container book"
           }
         >
-          <div className="btn-cadastro" onClick={this.toggleForm}>
-            <span>Abrir</span>
+          <div
+            className={this.state.window ? "btn-open open" : "btn-open"}
+            onClick={this.toggleForm}
+          >
+            <i className="fas fa-plus"></i>
+            Abrir
           </div>
           <h3 className="box-title">{this.state.titleOperation}</h3>
           <div className="box-form">
@@ -113,16 +136,57 @@ export default class FormBook extends Component {
                 maxLength={this.state.maxName}
                 onChange={this.inputName}
               />
-              <span className="msg">{this.state.msg}</span>
+              <span className="msg">{this.state.msgInput}</span>
+              <label htmlFor="summary">
+                <span className="textarea-title">Sinópse</span>
+                <textarea
+                  id="summary"
+                  name="summary"
+                  rows="3"
+                  value={this.state.summary}
+                  maxLength={this.state.maxSummary}
+                  onChange={this.inputSummary}
+                />
+              </label>
+              <span className="msg">{this.state.msgTextArea}</span>
+              <label htmlFor="book-authors">
+                <span className="select-title">Selecione o author</span>
+                <select
+                  name="authors"
+                  id="book-authors"
+                  value={this.state.selectAuthor}
+                  onChange={this.changeAuthor}
+                >
+                  <option value="0">Selecione o autor</option>
+                  {this.props.authors.map(author => {
+                    return (
+                      <option key={author.id} value={author.id}>
+                        {author.name}
+                      </option>
+                    );
+                  })}
+                </select>
+              </label>
               <ButtonConfirm
                 type={"submit"}
                 value={this.state.button}
-                disabled={this.state.name.trim().length === 0 ? "disabled" : ""}
+                disabled={
+                  this.state.name.trim().length !== 0 &&
+                  this.state.name.trim().length !== this.state.maxName &&
+                  this.state.summary.trim().length !== 0 &&
+                  this.state.summary.trim().length !== this.state.maxSummary &&
+                  this.state.selectAuthor.toString() !== "0"
+                    ? ""
+                    : "disabled"
+                }
               />
             </form>
           </div>
         </div>
-        <div className={this.state.window ? "mask show" : "mask"}></div>
+        <div
+          className={this.state.window ? "mask show" : "mask"}
+          onClick={this.toggleForm}
+        ></div>
       </div>
     );
   }
