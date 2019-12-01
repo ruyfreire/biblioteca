@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-import TableList from "../../components/tables/tableList";
 import ButtonPagination from "../../components/buttons/buttonPagination";
 import ButtonEditList from "../../components/buttons/buttonEditList";
 
@@ -49,14 +48,46 @@ export default class ListaBook extends Component {
     });
   };
 
+  itensTable = linha => {
+    let itens = [];
+    for (let item in linha) {
+      if (item !== "id" && item !== "author") {
+        itens.push(<td key={linha[item]}>{linha[item]}</td>);
+      }
+    }
+
+    return itens;
+  };
+
   render() {
     return (
       <div className="box-list">
-        <TableList
-          cabecalho={Object.keys(this.props.lista.books[0])}
-          corpo={this.props.lista.books}
-          click={this.showOptions}
-        />
+        <div className="list-table">
+          <table>
+            <thead>
+              <tr>
+                {Object.keys(this.props.lista.books[0]).map(title => {
+                  if (title !== "id" && title !== "author")
+                    return <th key={title}>{title}</th>;
+                  else return null;
+                })}
+              </tr>
+            </thead>
+            <tbody>
+              {this.props.lista.books.map((linha, index) => {
+                return (
+                  <tr
+                    key={index}
+                    id={`id-${linha.id}`}
+                    onClick={() => this.showOptions(linha.id)}
+                  >
+                    {this.itensTable(linha).map(td => td)}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
         <div className="bottom-table">
           <div className="bottom-edit">
             {this.state.edit.status ? (
@@ -67,8 +98,18 @@ export default class ListaBook extends Component {
                 this.state.edit.status ? "options-list show" : "options-list"
               }
               buttons={[
-                { class: "edit", name: "Editar", click: this.editar },
-                { class: "delete", name: "Deletar", click: this.delete }
+                {
+                  class: "edit",
+                  icon: "fas fa-edit",
+                  name: "Editar",
+                  click: this.editar
+                },
+                {
+                  class: "delete",
+                  icon: "fas fa-trash-alt",
+                  name: "Deletar",
+                  click: this.delete
+                }
               ]}
             />
             <span className="msg">{this.state.msg}</span>

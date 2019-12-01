@@ -20,6 +20,10 @@
 
   &.open {
     bottom: 200px;
+
+    &.book {
+      bottom: 350px;
+    }
   }
 
   h3 {

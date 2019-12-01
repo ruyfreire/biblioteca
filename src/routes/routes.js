@@ -16,6 +16,7 @@ const rotas = () => {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/authors" component={AuthorBox} />
+            {/* <Route path="/books" component={BookBox} /> */}
             <Route path="/books" component={PageWorking} />
             <Route path="*" component={NotFound} />
           </Switch>
