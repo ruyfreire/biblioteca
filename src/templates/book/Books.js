@@ -37,13 +37,14 @@ export default class BookBox extends Component {
       .catch(error => this.setState(error));
   };
 
-  cadastra = (dados, callback) => {
-    BookAPI.cadastrar(dados)
-      .then(() => {
-        this.carregaLista();
-        callback("success");
-      })
-      .catch(error => console.log(error));
+  buscaAuthor = id => {
+    return BookAPI.buscaAuthor(id);
+  };
+
+  cadastra = dados => {
+    const result = BookAPI.cadastrar(dados);
+    result.then(() => this.carregaLista()).catch(error => console.log(error));
+    return result;
   };
 
   delete = (id, callback) => {
@@ -123,6 +124,7 @@ export default class BookBox extends Component {
             pagination={this.pagination}
             delete={this.delete}
             openEdit={this.openEdit}
+            authors={this.buscaAuthor}
           />
         ) : null}
 
