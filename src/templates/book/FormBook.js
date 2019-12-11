@@ -77,13 +77,14 @@ export default class FormBook extends Component {
         }
       );
     } else {
-      this.props.cadastra({ name: this.state.name }, result => {
-        if (result === "success") {
-          this.toggleForm();
-        } else {
-          this.setState({ msg: "Erro ao cadastrar Livro" });
-        }
-      });
+      this.props
+        .cadastra({
+          name: this.state.name,
+          summary: this.state.summary,
+          author: [parseInt(this.state.selectAuthor)]
+        })
+        .then(() => this.toggleForm())
+        .catch(() => this.setState({ msg: "Erro ao cadastrar Livro" }));
     }
   };
 
