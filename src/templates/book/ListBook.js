@@ -1,12 +1,17 @@
 import React, { Component } from "react";
 
+import DetailsList from "../../components/tables/DetailsList";
 import ButtonPagination from "../../components/buttons/buttonPagination";
 import ButtonEditList from "../../components/buttons/buttonEditList";
 
 export default class ListaBook extends Component {
   constructor() {
     super();
-    this.state = { msg: "", edit: { status: false, book: {} } };
+    this.state = {
+      msg: "",
+      edit: { status: false, book: {} },
+      listAuthors: []
+    };
   }
 
   clear = () => {
@@ -24,13 +29,22 @@ export default class ListaBook extends Component {
   };
 
   showOptions = id => {
-    this.setState({
+    let att = {
       edit: {
         status: true,
         book: this.props.lista.books.filter(at => at.id === id)[0]
       },
       msg: ""
-    });
+    };
+    this.props
+      .authors(id)
+      .then(data => {
+        att.listAuthors = data;
+        this.setState(att);
+      })
+      .catch(() => {
+        this.setState(att);
+      });
   };
 
   editar = () => {
@@ -52,7 +66,7 @@ export default class ListaBook extends Component {
     let itens = [];
     for (let item in linha) {
       if (item !== "id" && item !== "author") {
-        itens.push(<td key={linha[item]}>{linha[item]}</td>);
+        itens.push(<td key={item + linha[item]}>{linha[item]}</td>);
       }
     }
 
@@ -120,6 +134,13 @@ export default class ListaBook extends Component {
             next={this.props.lista.next !== null ? this.nextPage : null}
           />
         </div>
+
+        {this.state.edit.status && (
+          <DetailsList
+            title={"Autores deste livro"}
+            list={this.state.listAuthors}
+          />
+        )}
       </div>
     );
   }
