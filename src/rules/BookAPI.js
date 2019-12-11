@@ -94,39 +94,27 @@ export default class BookAPI {
     });
   }
 
-  static listarAuthors() {
-    // return new Promise((resolve, reject) => {
-    //   let nextPage = "";
-    //   let authores = [];
-    //   while(nextPage !== null) {
-    //     let [authores, next] = this.pages(
-    //       "https://api-bibliotecaruy.herokuapp.com/v1/author/"
-    //     )
-    //     .then((authores, next) => {
-    //       nextPage = next;
-    //       authores.push(...authores);
-    //     })
-    //   }
-    //   resolve(authores);
-    // });
+  static listarAuthors(id) {
+    return new Promise((resolve, reject) => {
+      fetch("https://api-bibliotecaruy.herokuapp.com/v1/author/")
+        .then(resp => resp.json())
+        .then(data => resolve(data.results))
+        .catch(error => {
+          console.log(error);
+          reject();
+        });
+    });
   }
 
-  pages(url) {
-    // return new Promise((resolve, reject) => {
-    //   fetch(url)
-    //     .then(resp => {
-    //       if (resp.ok) {
-    //         resp.json().then(data => {
-    //           return data.results
-    //         });
-    //       } else {
-    //         throw new Error("Erro ao buscar autores da API!");
-    //       }
-    //     })
-    //     .catch(error => {
-    //       console.log(error);
-    //       reject(error);
-    //     });
-    // });
+  static buscaAuthor(id) {
+    return new Promise((resolve, reject) => {
+      fetch(`https://api-bibliotecaruy.herokuapp.com/v1/book/${id}/author/`)
+        .then(resp => resp.json())
+        .then(data => resolve(data))
+        .catch(error => {
+          console.log(error);
+          reject();
+        });
+    });
   }
 }
