@@ -4,7 +4,7 @@ export default class DetailsList extends Component {
   render() {
     return (
       <div className="details-list">
-        <h4 className="list-title">Livros deste autor</h4>
+        <h4 className="list-title">{this.props.title}</h4>
         <ul>
           {this.props.list.length > 0 ? (
             this.props.list.map((book, index) => {
