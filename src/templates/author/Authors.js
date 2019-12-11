@@ -69,8 +69,6 @@ export default class AuthorBox extends Component {
 
   listBooks = id => {
     return AuthorAPI.listarBooks(id);
-    // const result = AuthorAPI.listarBooks(id);
-    // result.then(resp => {}).catch(error => console.log(error));
   };
 
   pagination = () => {

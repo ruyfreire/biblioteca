@@ -98,9 +98,7 @@ export default class AuthorAPI {
     return new Promise((resolve, reject) => {
       fetch(`https://api-bibliotecaruy.herokuapp.com/v1/author/${id}/book/`)
         .then(resp => resp.json())
-        .then(data => {
-          resolve(data);
-        })
+        .then(data => resolve(data))
         .catch(error => {
           console.log(error);
           reject(error);

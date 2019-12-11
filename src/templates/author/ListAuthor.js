@@ -105,9 +105,12 @@ export default class ListAuthor extends Component {
           />
         </div>
 
-        {this.state.edit.status ? (
-          <DetailsList list={this.state.listBooks} />
-        ) : null}
+        {this.state.edit.status && (
+          <DetailsList
+            title={"Livros deste autor"}
+            list={this.state.listBooks}
+          />
+        )}
       </div>
     );
   }
