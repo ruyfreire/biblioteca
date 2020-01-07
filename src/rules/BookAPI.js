@@ -94,15 +94,35 @@ export default class BookAPI {
     });
   }
 
-  static listarAuthors(id) {
-    return new Promise((resolve, reject) => {
-      fetch("https://api-bibliotecaruy.herokuapp.com/v1/author/")
-        .then(resp => resp.json())
-        .then(data => resolve(data.results))
-        .catch(error => {
-          console.log(error);
-          reject();
-        });
+  static listarAuthors() {
+    return new Promise((resolve, reject) => {   
+      
+      const list = async () => {
+        let dados = [];
+        let cont = true;
+        let url = 'https://api-bibliotecaruy.herokuapp.com/v1/author/';
+
+        while (cont) {
+          let newData = await fetch(url)
+            .then(resp => resp.json())
+            .then(data => {
+              return data;
+            })
+            .catch(error => {
+              console.log(error);
+            });
+
+            dados.push(...newData.results);
+            if(!newData.next) cont = false;
+
+            url = newData.next;
+        }
+
+        return dados;
+      }
+      list()
+        .then(result => resolve(result))
+        .catch(error => reject(error));
     });
   }
 
