@@ -28,13 +28,13 @@ export default class BookBox extends Component {
       .then(data =>
         this.setState({ ...data, edit: { status: false, book: {} } })
       )
-      .catch(error => this.setState(error));
+      .catch(error => console.log(error));
   }
 
   carregaAuthor = () => {
     BookAPI.listarAuthors()
       .then(data => this.setState({ authors: data }))
-      .catch(error => this.setState(error));
+      .catch(error => console.log(error));
   };
 
   buscaAuthor = id => {
