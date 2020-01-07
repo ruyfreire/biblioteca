@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import Multiselect from 'react-widgets/lib/Multiselect';
+import 'react-widgets/dist/css/react-widgets.css';
 
 import Input from "../../components/inputs/InputText";
 import ButtonConfirm from "../../components/buttons/buttonConfirm";
@@ -14,7 +16,7 @@ export default class FormBook extends Component {
       summary: "",
       maxName: 30,
       maxSummary: 300,
-      selectAuthor: 0,
+      selectAuthor: [],
       msgInput: "",
       msgTextArea: "",
       edited: false
@@ -77,14 +79,21 @@ export default class FormBook extends Component {
         }
       );
     } else {
-      this.props
-        .cadastra({
-          name: this.state.name,
-          summary: this.state.summary,
-          author: [parseInt(this.state.selectAuthor)]
-        })
-        .then(() => this.toggleForm())
-        .catch(() => this.setState({ msg: "Erro ao cadastrar Livro" }));
+
+      console.log({
+            name: this.state.name,
+            summary: this.state.summary,
+            author: this.state.selectAuthor
+          });
+
+      // this.props
+      //   .cadastra({
+      //     name: this.state.name,
+      //     summary: this.state.summary,
+      //     author: [parseInt(this.state.selectAuthor)]
+      //   })
+      //   .then(() => this.toggleForm())
+      //   .catch(() => this.setState({ msg: "Erro ao cadastrar Livro" }));
     }
   };
 
@@ -152,31 +161,28 @@ export default class FormBook extends Component {
               <span className="msg">{this.state.msgTextArea}</span>
               <label htmlFor="book-authors">
                 <span className="select-title">Selecione o author</span>
-                <select
-                  name="authors"
-                  id="book-authors"
-                  value={this.state.selectAuthor}
-                  onChange={this.changeAuthor}
-                >
-                  <option value="0">Selecione o autor</option>
-                  {this.props.authors.map(author => {
-                    return (
-                      <option key={author.id} value={author.id}>
-                        {author.name}
-                      </option>
-                    );
-                  })}
-                </select>
+                <Multiselect
+                  dropUp
+                  data={this.props.authors}
+                  valueField='id'
+                  textField='name'
+                  onChange={list => {
+                      const names = list.map(author => author.id);
+                      this.setState({selectAuthor: names})
+                    }
+                  }
+                />
               </label>
+
               <ButtonConfirm
                 type={"submit"}
                 value={this.state.button}
                 disabled={
                   this.state.name.trim().length !== 0 &&
-                  this.state.name.trim().length !== this.state.maxName &&
-                  this.state.summary.trim().length !== 0 &&
-                  this.state.summary.trim().length !== this.state.maxSummary &&
-                  this.state.selectAuthor.toString() !== "0"
+                    this.state.name.trim().length !== this.state.maxName &&
+                    this.state.summary.trim().length !== 0 &&
+                    this.state.summary.trim().length !== this.state.maxSummary &&
+                    this.state.selectAuthor.toString() !== []
                     ? ""
                     : "disabled"
                 }
