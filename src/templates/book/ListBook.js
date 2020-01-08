@@ -8,6 +8,7 @@ export default class ListaBook extends Component {
   constructor() {
     super();
     this.state = {
+      filter: "",
       msg: "",
       edit: { status: false, book: {} },
       listAuthors: []
@@ -73,9 +74,24 @@ export default class ListaBook extends Component {
     return itens;
   };
 
+  search = e => {
+    e.preventDefault();
+    this.props.search(this.state.filter);
+  }
+
   render() {
     return (
       <div className="box-list">
+
+        <form className="search-filter" onSubmit={this.search} onKeyUp={this.search}>
+          <input
+            value={this.state.filter}
+            onChange={e => this.setState({ filter: e.target.value })}
+            type="text"
+            name="filter"
+            placeholder="Pesquisar nome..." />
+        </form>
+
         <div className="list-table">
           <table>
             <thead>

@@ -31,6 +31,25 @@ export default class BookBox extends Component {
       .catch(error => console.log(error));
   }
 
+  searchFilter = filter => {
+    const result = BookAPI.searchFilter(filter);
+    result
+      .then(data => {
+        if(data.results.length > 0) {
+          this.setState({
+            count: data.count,
+            next: data.next,
+            prev: data.previous,
+            books: data.results,
+            edit: { status: false, book: {} }
+          })
+        }
+      })
+      .catch(error => console.log(error));
+
+    return result;
+  }
+
   carregaAuthor = () => {
     BookAPI.listarAuthors()
       .then(data => this.setState({ authors: data }))
@@ -126,6 +145,7 @@ export default class BookBox extends Component {
             delete={this.delete}
             openEdit={this.openEdit}
             authors={this.buscaAuthor}
+            search={this.searchFilter}
           />
         ) : null}
 

@@ -141,4 +141,21 @@ export default class BookAPI {
         });
     });
   }
+
+  static searchFilter(filter) {
+    return new Promise((resolve, reject) => {
+      fetch(`https://api-bibliotecaruy.herokuapp.com/v1/book/?name=${filter}`)
+        .then(resp => {
+          if (resp.ok) {
+            resolve(resp.json());
+          } else {
+            reject();
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          reject(error);
+        });
+    });
+  }
 }
