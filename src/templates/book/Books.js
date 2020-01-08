@@ -59,19 +59,23 @@ export default class BookBox extends Component {
       });
   };
 
-  openEdit = (edit, callback) => {
+  openEdit = edit => {
     this.setState({ edit: { status: edit.status, book: edit.book } });
   };
+
+  removeStatusEdit = () => {
+    this.setState({ edit: { status: false, book: {} } });
+  }
 
   edit = book => {
     const result = BookAPI.edit(book);
     result
-        .then(() => {
-          this.carregaLista();
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      .then(() => {
+        this.carregaLista();
+      })
+      .catch(error => {
+        console.log(error);
+      });
 
       return result;
   };
@@ -131,6 +135,7 @@ export default class BookBox extends Component {
             edit={this.edit}
             edited={this.state.edit}
             authors={this.state.authors}
+            removeStatusEdit={this.removeStatusEdit}
           />
         ) : null}
       </div>

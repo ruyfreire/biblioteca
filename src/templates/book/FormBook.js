@@ -26,20 +26,21 @@ export default class FormBook extends Component {
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.edited.status) {
       this.setState({ edited: true });
+      this.props.removeStatusEdit();
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.edited && !prevState.edited) {
-      this.setState({
-        window: !this.state.window,
-        name: this.props.edited.book.name,
-        summary: this.props.edited.book.summary,
+        this.setState({
+          window: !this.state.window,
+          name: this.props.edited.book.name,
+          summary: this.props.edited.book.summary,
           selectAuthor: this.setDefaultAuthors(this.props.edited.book.author),
-        button: "Editar",
-        titleOperation: "Editar Livro"
-      });
-  }
+          button: "Editar",
+          titleOperation: "Editar Livro"
+        });
+    }
   }
 
   toggleForm = () => {
@@ -66,7 +67,7 @@ export default class FormBook extends Component {
       if (this.state.name === this.props.edited.book.name &&
         this.state.summary === this.props.edited.book.summary &&
         newAuthors === listAuthors) {
-              this.setState({ msg: "Nada foi alterado!" });
+        this.setState({ msg: "Nada foi alterado!" });
       } else {
         this.props
           .edit({
@@ -77,12 +78,12 @@ export default class FormBook extends Component {
           })
           .then(() => this.toggleForm())
           .catch(() => this.setState({ msg: "Erro ao editar Livro" }));
-          }
+      }
     } else {
       this.props
         .cadastra({
-            name: this.state.name,
-            summary: this.state.summary,
+          name: this.state.name,
+          summary: this.state.summary,
           author: this.state.selectAuthor.map(author => author.id)
         })
         .then(() => this.toggleForm())
