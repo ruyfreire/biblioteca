@@ -64,7 +64,7 @@ export default class BookBox extends Component {
   };
 
   removeStatusEdit = () => {
-    this.setState({ edit: { status: false, book: {} } });
+    this.setState({ edit: { status: false, book: this.state.edit.book } });
   }
 
   edit = book => {

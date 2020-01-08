@@ -56,7 +56,7 @@ export default class AuthorBox extends Component {
   };
 
   removeStatusEdit = () => {
-    this.setState({ edit: { status: false, author: {} } });
+    this.setState({ edit: { status: false, author: this.state.edit.author } });
   }
 
   editAuthor = author => {
