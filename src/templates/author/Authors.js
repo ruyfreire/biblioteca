@@ -29,6 +29,25 @@ export default class AuthorBox extends Component {
       .catch(error => this.setState(error));
   };
 
+  searchFilter = filter => {
+    const result = AuthorAPI.searchFilter(filter);
+    result
+      .then(data => {
+        if(data.results.length > 0) {
+          this.setState({
+            count: data.count,
+            next: data.next,
+            prev: data.previous,
+            authors: data.results,
+            edit: { status: false, author: {} }
+          })
+        }
+      })
+      .catch(error => console.log(error));
+
+    return result;
+  }
+
   cadastraAuthor = dados => {
     const result = AuthorAPI.cadastrar(dados);
     result
@@ -121,6 +140,7 @@ export default class AuthorBox extends Component {
             delete={this.deleteAuthor}
             edit={this.openEditAuthor}
             books={this.listBooks}
+            search={this.searchFilter}
           />
         ) : null}
 

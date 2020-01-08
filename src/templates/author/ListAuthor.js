@@ -9,6 +9,7 @@ export default class ListAuthor extends Component {
   constructor() {
     super();
     this.state = {
+      filter: "",
       msg: "",
       edit: { status: false, author: {} },
       listBooks: []
@@ -64,9 +65,24 @@ export default class ListAuthor extends Component {
       .catch(() => this.setState({ msg: "Erro ao deletar" }));
   };
 
+  search = e => {
+    e.preventDefault();
+    this.props.search(this.state.filter);
+  }
+
   render() {
     return (
       <div className="box-list">
+
+      <form className="search-filter" onSubmit={this.search} onKeyUp={this.search}>
+        <input
+          value={this.state.filter}
+          onChange={e => this.setState({filter: e.target.value})}
+          type="text"
+          name="filter"
+          placeholder="Pesquisar nome..."/>
+      </form>
+
         <TableList
           cabecalho={Object.keys(this.props.lista.authors[0])}
           corpo={this.props.lista.authors}
