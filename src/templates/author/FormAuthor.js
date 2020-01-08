@@ -20,6 +20,7 @@ export default class FormAuthor extends Component {
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.edit.status) {
       this.setState({ edit: true });
+      this.props.removeStatusEdit();
     }
   }
 

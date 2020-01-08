@@ -55,6 +55,10 @@ export default class AuthorBox extends Component {
     this.setState({ edit: { status: edit.status, author: edit.author } });
   };
 
+  removeStatusEdit = () => {
+    this.setState({ edit: { status: false, author: {} } });
+  }
+
   editAuthor = author => {
     const result = AuthorAPI.edit(author);
     result
@@ -125,6 +129,7 @@ export default class AuthorBox extends Component {
             cadastraAuthor={this.cadastraAuthor}
             editAuthor={this.editAuthor}
             edit={this.state.edit}
+            removeStatusEdit={this.removeStatusEdit}
           />
         ) : null}
       </div>
