@@ -1,52 +1,85 @@
 .box-listagem {
-  height: 100%;
-  overflow: hidden;
-  padding: 0 10px;
-  position: relative;
+	height: 100%;
+	overflow: hidden;
+	padding: 0 10px;
+	position: relative;
 
-  .msg-status {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 50%;
-    padding: 10px;
-    color: $error;
-    font-size: 0.8em;
-    font-weight: bold;
-  }
+	.msg-status {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 50%;
+		padding: 10px;
+		color: $error;
+		font-size: 0.8em;
+		font-weight: bold;
+	}
 
-  .box-list {
-    height: 80%;
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+	.box-list {
+		height: 80%;
+		width: 100%;
+		max-width: 800px;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		position: relative;
 
-    .bottom-table {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      padding: 5px 0;
-      width: 100%;
-      min-height: 50px;
-    }
+		.bottom-table {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			padding: 5px 0;
+			width: 100%;
+			min-height: 50px;
+		}
 
-    .bottom-edit {
-      display: flex;
-      align-items: center;
-      flex-grow: 1;
+		.bottom-edit {
+			display: flex;
+			align-items: center;
+			flex-grow: 1;
 
-      p {
-        display: inline-block;
+			p {
+				display: inline-block;
+			}
+
+			.msg {
+				color: $error;
+				font-size: 0.8em;
+				font-weight: bold;
+			}
+		}
+	}
+
+	.search-filter {
+		display: flex;
+		position: absolute;
+		top: 0;
+		right: 0;
+		padding: 4px;
+		width: 30%;
+
+		input {
+			border: 0;
+			border-bottom: 1px solid #fff;
+			background-color: transparent;
+      color: #fff;
+      
+      &::placeholder {
+        color: #fff;
       }
-
-      .msg {
-        color: $error;
-        font-size: 0.8em;
-        font-weight: bold;
+      &::-webkit-input-placeholder {
+        color: #fff;
       }
-    }
-  }
+      &::-moz-placeholder {
+        color: #fff;
+      }
+		}
+
+		i {
+			color: #fff;
+			font-size: 1.5em;
+			margin-left: -1.5em;
+		}
+	}
 }
