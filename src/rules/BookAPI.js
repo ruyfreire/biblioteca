@@ -72,16 +72,20 @@ export default class BookAPI {
 
   static edit(book) {
     return new Promise((resolve, reject) => {
-      fetch(`https://api-bibliotecaruy.herokuapp.com/v1/book/${book.id}`, {
+      fetch(`https://api-bibliotecaruy.herokuapp.com/v1/book/${book.id}/`, {
         method: "PUT",
         headers: new Headers({
           "Content-Type": "application/json"
         }),
-        body: JSON.stringify({ name: book.name })
+        body: JSON.stringify(
+          {
+            name: book.name,
+            summary: book.summary,
+            author: book.author
+          })
       })
         .then(resp => {
           if (resp.ok) {
-            console.log(resp);
             resolve();
           } else {
             reject(resp.statusText);
@@ -95,8 +99,8 @@ export default class BookAPI {
   }
 
   static listarAuthors() {
-    return new Promise((resolve, reject) => {   
-      
+    return new Promise((resolve, reject) => {
+
       const list = async () => {
         let dados = [];
         let cont = true;
@@ -112,10 +116,10 @@ export default class BookAPI {
               console.log(error);
             });
 
-            dados.push(...newData.results);
-            if(!newData.next) cont = false;
+          dados.push(...newData.results);
+          if (!newData.next) cont = false;
 
-            url = newData.next;
+          url = newData.next;
         }
 
         return dados;

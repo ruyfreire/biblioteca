@@ -30,15 +30,16 @@ export default class FormBook extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.edited && !prevState.edited)
+    if (this.state.edited && !prevState.edited) {
       this.setState({
         window: !this.state.window,
         name: this.props.edited.book.name,
         summary: this.props.edited.book.summary,
-        selectAuthor: this.props.edited.book.author[0],
+          selectAuthor: this.setDefaultAuthors(this.props.edited.book.author),
         button: "Editar",
         titleOperation: "Editar Livro"
       });
+  }
   }
 
   toggleForm = () => {
@@ -46,7 +47,7 @@ export default class FormBook extends Component {
       window: !this.state.window,
       name: "",
       summary: "",
-      selectAuthor: 0,
+      selectAuthor: [],
       titleOperation: "Cadastro Livro",
       button: "Cadastrar",
       edited: false,
@@ -57,43 +58,35 @@ export default class FormBook extends Component {
   form = event => {
     event.preventDefault();
     if (this.state.edited === true) {
-      this.props.edit(
-        { id: this.props.edited.book.id, name: this.state.name },
-        result => {
-          switch (result) {
-            case "success":
-              this.toggleForm();
-              break;
+      let newAuthors = this.state.selectAuthor.map(author => author.id);
+      let listAuthors = this.props.edited.book.author;
+      newAuthors = JSON.stringify(newAuthors.sort((a, b) => a - b));
+      listAuthors = JSON.stringify(listAuthors.sort((a, b) => a - b));
 
-            case "none":
+      if (this.state.name === this.props.edited.book.name &&
+        this.state.summary === this.props.edited.book.summary &&
+        newAuthors === listAuthors) {
               this.setState({ msg: "Nada foi alterado!" });
-              break;
-
-            case "error":
-              this.setState({ msg: "Erro ao editar Livro" });
-              break;
-
-            default:
-              break;
-          }
-        }
-      );
-    } else {
-
-      console.log({
+      } else {
+        this.props
+          .edit({
+            id: this.props.edited.book.id,
             name: this.state.name,
             summary: this.state.summary,
-            author: this.state.selectAuthor
-          });
-
-      // this.props
-      //   .cadastra({
-      //     name: this.state.name,
-      //     summary: this.state.summary,
-      //     author: [parseInt(this.state.selectAuthor)]
-      //   })
-      //   .then(() => this.toggleForm())
-      //   .catch(() => this.setState({ msg: "Erro ao cadastrar Livro" }));
+            author: this.state.selectAuthor.map(author => author.id)
+          })
+          .then(() => this.toggleForm())
+          .catch(() => this.setState({ msg: "Erro ao editar Livro" }));
+          }
+    } else {
+      this.props
+        .cadastra({
+            name: this.state.name,
+            summary: this.state.summary,
+          author: this.state.selectAuthor.map(author => author.id)
+        })
+        .then(() => this.toggleForm())
+        .catch(() => this.setState({ msg: "Erro ao cadastrar Livro" }));
     }
   };
 
@@ -116,6 +109,12 @@ export default class FormBook extends Component {
   changeAuthor = e => {
     this.setState({ selectAuthor: e.target.value });
   };
+
+  setDefaultAuthors = list => {
+    let newList = [];
+    this.props.authors.map(author => list.map(id => id === author.id && newList.push(author)));
+    return newList;
+  }
 
   render() {
     return (
@@ -164,11 +163,11 @@ export default class FormBook extends Component {
                 <Multiselect
                   dropUp
                   data={this.props.authors}
-                  valueField='id'
                   textField='name'
-                  onChange={list => {
-                      const names = list.map(author => author.id);
-                      this.setState({selectAuthor: names})
+                  value={this.state.selectAuthor}
+                  onChange={author => {
+                      // const names = list.map(author => author.id);
+                      this.setState({selectAuthor: author})
                     }
                   }
                 />
@@ -182,7 +181,7 @@ export default class FormBook extends Component {
                     this.state.name.trim().length !== this.state.maxName &&
                     this.state.summary.trim().length !== 0 &&
                     this.state.summary.trim().length !== this.state.maxSummary &&
-                    this.state.selectAuthor.toString() !== []
+                    this.state.selectAuthor.length !== 0
                     ? ""
                     : "disabled"
                 }

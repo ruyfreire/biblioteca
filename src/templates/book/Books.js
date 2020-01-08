@@ -63,20 +63,17 @@ export default class BookBox extends Component {
     this.setState({ edit: { status: edit.status, book: edit.book } });
   };
 
-  edit = (book, callback) => {
-    if (book.name !== this.state.edit.book.name) {
-      BookAPI.edit(book)
+  edit = book => {
+    const result = BookAPI.edit(book);
+    result
         .then(() => {
           this.carregaLista();
-          callback("success");
         })
         .catch(error => {
           console.log(error);
-          callback("error");
         });
-    } else {
-      callback("none");
-    }
+
+      return result;
   };
 
   pagination = () => {
