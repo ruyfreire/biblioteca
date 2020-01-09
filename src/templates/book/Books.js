@@ -140,6 +140,7 @@ export default class BookBox extends Component {
 
         {this.state.statusAPI === "success" ? (
           <ListBook
+            numberPage={this.state.count}
             lista={this.state}
             pagination={this.pagination}
             delete={this.delete}

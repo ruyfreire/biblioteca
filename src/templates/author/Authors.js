@@ -135,6 +135,7 @@ export default class AuthorBox extends Component {
 
         {this.state.statusAPI === "success" ? (
           <ListAuthor
+            numberPage={this.state.count}
             lista={this.state}
             pagination={this.pagination}
             delete={this.deleteAuthor}

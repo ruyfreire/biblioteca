@@ -146,6 +146,7 @@ export default class ListaBook extends Component {
           </div>
 
           <ButtonPagination
+            numberPage={this.props.numberPage}
             prev={this.props.lista.prev !== null ? this.prevPage : null}
             next={this.props.lista.next !== null ? this.nextPage : null}
           />

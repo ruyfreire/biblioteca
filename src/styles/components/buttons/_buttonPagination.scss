@@ -40,4 +40,12 @@
     border-bottom-right-radius: 5px;
     border-left: 1px solid $secondary-color;
   }
+
+  .numbers {
+    padding: 0 5px;
+
+    span {
+      padding: 0 2px;
+    }
+  }
 }
