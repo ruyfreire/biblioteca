@@ -1,10 +1,16 @@
+label[for="book-authors"] {
+  display: block;
+  margin-bottom: 10px;
+}
+
 .select-title {
-  margin-right: 10px;
+  display: block;
+  margin-bottom: 2px;
 }
 
 select {
   outline: 0;
-  border: 1px solid #000;
+  border: 1px solid #ccc;
   padding: 5px 10px 5px 5px;
   line-height: 1.5em;
 }

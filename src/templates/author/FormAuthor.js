@@ -77,22 +77,23 @@ export default class FormAuthor extends Component {
 
   render() {
     return (
-      <div className="box-cadastro">
+      <>
+        <div
+          className={this.state.window ? "btn-open open" : "btn-open"}
+          onClick={this.toggleForm}
+        >
+          <i className="fas fa-plus"></i>
+          Abrir
+          </div>
+
         <div
           className={
             this.state.window
-              ? "box-cadastro-container open"
-              : "box-cadastro-container"
+              ? "box-cadastro open"
+              : "box-cadastro"
           }
         >
-          <div
-            className={this.state.window ? "btn-open open" : "btn-open"}
-            onClick={this.toggleForm}
-          >
-            <i className="fas fa-plus"></i>
-            Abrir
-          </div>
-
+          <i className="fas fa-times-circle btn-close" onClick={this.toggleForm}></i>
           <h3 className="box-title">{this.state.titleOperation}</h3>
           <div className="box-form">
             <form onSubmit={this.formAuthor} method="post">
@@ -114,8 +115,8 @@ export default class FormAuthor extends Component {
             </form>
           </div>
         </div>
-        <div className={this.state.window ? "mask show" : "mask"}></div>
-      </div>
+        <div className={this.state.window ? "mask show" : "mask"} onClick={this.toggleForm}></div>
+      </>
     );
   }
 }

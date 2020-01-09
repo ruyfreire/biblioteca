@@ -1,12 +1,18 @@
+label[for="name"] {
+  display: block;
+}
+
 .input-title {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 2px;
 }
 
 input {
   width: 100%;
   outline: 0;
-  border: 1px solid #000;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   padding: 5px 10px;
+  margin-bottom: 10px;
   line-height: 1.5em;
 }
