@@ -35,15 +35,18 @@ export default class BookBox extends Component {
     const result = BookAPI.searchFilter(filter);
     result
       .then(data => {
-        if(data.results.length > 0) {
-          this.setState({
-            count: data.count,
-            next: data.next,
-            prev: data.previous,
-            books: data.results,
-            edit: { status: false, book: {} }
-          })
-        }
+
+        let list = [];
+        if (data.results.length > 0) list = data.results;
+        else list = [{ id: 0, vazio: "Nenhum encontrado" }];
+
+        this.setState({
+          count: data.count,
+          next: data.next,
+          prev: data.previous,
+          books: list,
+          edit: { status: false, book: {} }
+        })
       })
       .catch(error => console.log(error));
 
@@ -96,7 +99,7 @@ export default class BookBox extends Component {
         console.log(error);
       });
 
-      return result;
+    return result;
   };
 
   pagination = () => {

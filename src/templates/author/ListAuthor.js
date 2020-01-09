@@ -9,6 +9,7 @@ export default class ListAuthor extends Component {
   constructor() {
     super();
     this.state = {
+      boxSearch: false,
       filter: "",
       msg: "",
       edit: { status: false, author: {} },
@@ -65,23 +66,40 @@ export default class ListAuthor extends Component {
       .catch(() => this.setState({ msg: "Erro ao deletar" }));
   };
 
-  search = e => {
-    e.preventDefault();
+  search = () => {
+    this.clear();
     this.props.search(this.state.filter);
+  }
+
+  toggleSearch = () => {
+    if (this.state.boxSearch && this.state.filter.trim().length > 0) {
+      this.search();
+      this.setState({ filter: "", boxSearch: !this.state.boxSearch })
+    }
+    else {
+      this.setState({ filter: "", boxSearch: !this.state.boxSearch })
+      this.search();
+    }
   }
 
   render() {
     return (
       <div className="box-list">
 
-      <form className="search-filter" onSubmit={this.search} onKeyUp={this.search}>
-        <input
-          value={this.state.filter}
-          onChange={e => this.setState({filter: e.target.value})}
-          type="text"
-          name="filter"
-          placeholder="Pesquisar nome..."/>
-      </form>
+        <form
+          className={this.state.boxSearch ? "search-filter open" : "search-filter"}
+          onSubmit={this.search} onKeyUp={this.search}>
+
+          <input
+            value={this.state.filter}
+            onChange={e => this.setState({ filter: e.target.value })}
+            type="text"
+            name="filter"
+            placeholder="Pesquisar nome..."
+            autoComplete="off" />
+
+          <i className="fas fa-search" onClick={this.toggleSearch}></i>
+        </form>
 
         <TableList
           cabecalho={Object.keys(this.props.lista.authors[0])}

@@ -31,7 +31,7 @@ export default class TableList extends Component {
                   key={index}
                   id={`id-${linha.id}`}
                   onClick={() => {
-                    this.props.click(linha.id);
+                    linha.id && this.props.click(linha.id);
                   }}
                 >
                   {this.itensTable(linha).map(td => td)}

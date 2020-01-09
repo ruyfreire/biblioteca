@@ -33,15 +33,19 @@ export default class AuthorBox extends Component {
     const result = AuthorAPI.searchFilter(filter);
     result
       .then(data => {
-        if(data.results.length > 0) {
-          this.setState({
-            count: data.count,
-            next: data.next,
-            prev: data.previous,
-            authors: data.results,
-            edit: { status: false, author: {} }
-          })
-        }
+
+        let list = [];
+        if (data.results.length > 0) list = data.results;
+        else list = [{ id: 0, vazio: "Nenhum encontrado" }];
+
+        this.setState({
+          count: data.count,
+          next: data.next,
+          prev: data.previous,
+          authors: list,
+          edit: { status: false, author: {} }
+        })
+
       })
       .catch(error => console.log(error));
 
