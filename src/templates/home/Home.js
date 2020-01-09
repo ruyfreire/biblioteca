@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import home from "../../img/home.png";
+import home from "../../img/books.png";
 
 export default class Books extends Component {
   render() {
