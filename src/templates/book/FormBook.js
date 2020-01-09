@@ -91,21 +91,9 @@ export default class FormBook extends Component {
     }
   };
 
-  inputName = e => {
-    this.setState({ name: e.target.value, msgInput: "" });
-    if (e.target.value.length === this.state.maxName) {
-      this.setState({ msgInput: `Máximo de ${this.state.maxName} caractéres` });
-    }
-  };
+  inputName = e => this.setState({ name: e.target.value });
 
-  inputSummary = e => {
-    this.setState({ summary: e.target.value, msgTextArea: "" });
-    if (e.target.value.length === this.state.maxSummary) {
-      this.setState({
-        msgTextArea: `Máximo de ${this.state.maxSummary} caractéres`
-      });
-    }
-  };
+  inputSummary = e => this.setState({ summary: e.target.value });
 
   changeAuthor = e => {
     this.setState({ selectAuthor: e.target.value });
@@ -146,7 +134,7 @@ export default class FormBook extends Component {
                 maxLength={this.state.maxName}
                 onChange={this.inputName}
               />
-              <span className="msg">{this.state.msgInput}</span>
+
               <label htmlFor="summary">
                 <span className="textarea-title">Sinópse</span>
                 <textarea
@@ -158,7 +146,7 @@ export default class FormBook extends Component {
                   onChange={this.inputSummary}
                 />
               </label>
-              <span className="msg">{this.state.msgTextArea}</span>
+              
               <label htmlFor="book-authors">
                 <span className="select-title">Selecione o author</span>
                 <Multiselect
