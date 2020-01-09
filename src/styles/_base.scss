@@ -3,137 +3,143 @@
 html,
 body,
 #root {
-  height: 100%;
-  font-size: 16px;
-  font-family: $font-base;
+	height: 100%;
+	font-size: 14px;
+	font-family: $font-base;
 }
 
 .app-container {
-  height: 100%;
-  display: flex;
-  flex-direction: column-reverse;
+	height: 100%;
+	display: flex;
+	flex-direction: column-reverse;
 }
 
 aside {
-  position: relative;
-  background-color: $primary-color;
-  .aside-container {
-    height: 100%;
-    padding: 10px;
-  }
+	position: relative;
+	background-color: $primary-color;
+	.aside-container {
+		height: 100%;
+		padding: 10px;
+	}
 
-  ul {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    overflow: hidden;
-  }
+	ul {
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		overflow: hidden;
+	}
 
-  li {
-    display: flex;
-    align-items: center;
-  }
+	li {
+		display: flex;
+		align-items: center;
+	}
 
-  li,
-  a,
-  i {
-    -webkit-touch-callout: none; /* iPhone OS, Safari */
-    -webkit-user-select: none; /* Chrome, Safari 3 */
-    -khtml-user-select: none; /* Safari 2 */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+ */
-    user-select: none;
-  }
+	li,
+	a,
+	i {
+		-webkit-touch-callout: none; /* iPhone OS, Safari */
+		-webkit-user-select: none; /* Chrome, Safari 3 */
+		-khtml-user-select: none; /* Safari 2 */
+		-moz-user-select: none; /* Firefox */
+		-ms-user-select: none; /* IE10+ */
+		user-select: none;
+	}
 
-  a {
-    display: flex;
-    align-items: flex-end;
-    font-family: $font-title;
-    color: $secondary-color;
-    opacity: 0.5;
-    text-transform: uppercase;
-    font-size: 0;
-    letter-spacing: 1px;
-    font-weight: bold;
-    white-space: nowrap;
+	a {
+		display: flex;
+		align-items: flex-end;
+		font-family: $font-title;
+		color: $secondary-color;
+		opacity: 0.5;
+		text-transform: uppercase;
+		font-size: 0;
+		letter-spacing: 1px;
+		font-weight: bold;
+		white-space: nowrap;
 
-    i {
-      font-size: 1.5rem;
-    }
+		i {
+			font-size: 1.5rem;
+		}
 
-    &:hover,
-    &:active {
-      opacity: 1;
-    }
-  }
-  .menu {
-    display: none;
+		&:hover,
+		&:active {
+			opacity: 1;
+		}
+	}
+	.menu {
+		display: none;
 
-    a {
-      font-size: 0;
+		a {
+			font-size: 0;
 
-      i {
-        font-size: 2.5rem;
-      }
-    }
-  }
+			i {
+				font-size: 2.5rem;
+			}
+		}
+	}
 }
 
 main {
-  background-color: $secondary-color;
-  flex-grow: 1;
-  height: 100%;
+	background-color: $secondary-color;
+	flex-grow: 1;
+	height: 100%;
 
-  h1 {
-    text-align: center;
-    padding: 10px;
-  }
+	h1 {
+		text-align: center;
+		padding: 10px;
+	}
 }
 
 @media screen and (min-width: 720px) {
-  .app-container {
-    flex-direction: row;
-  }
+	html,
+	body,
+	#root {
+		font-size: 16px;
+	}
 
-  aside {
-    width: 60px;
-    padding-top: 20px;
-    transition: all 0.3s ease-in-out;
+	.app-container {
+		flex-direction: row;
+	}
 
-    &.open {
-      width: 200px;
+	aside {
+		width: 60px;
+		padding-top: 20px;
+		transition: all 0.3s ease-in-out;
 
-      li a {
-        font-size: 0.8em;
-      }
-    }
+		&.open {
+			width: 200px;
 
-    ul {
-      flex-direction: column;
-      align-items: flex-start;
-    }
+			li a {
+				font-size: 0.8em;
+			}
+		}
 
-    li {
-      flex-grow: 1;
+		ul {
+			flex-direction: column;
+			align-items: flex-start;
+		}
 
-      a {
-        padding-left: 45px;
-        line-height: 35px;
-        position: relative;
+		li {
+			flex-grow: 1;
 
-        i {
-          position: absolute;
-          left: 0;
-          font-size: 2rem;
-        }
-      }
+			a {
+				padding-left: 45px;
+				line-height: 35px;
+				position: relative;
 
-      &.menu {
-        display: flex;
-        align-items: flex-start;
-        flex-grow: 1.5;
-      }
-    }
-  }
+				i {
+					position: absolute;
+					left: 0;
+					font-size: 2rem;
+				}
+			}
+
+			&.menu {
+				display: flex;
+				align-items: flex-start;
+				flex-grow: 1.5;
+			}
+		}
+	}
 }

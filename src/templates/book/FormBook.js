@@ -32,14 +32,14 @@ export default class FormBook extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.edited && !prevState.edited) {
-        this.setState({
-          window: !this.state.window,
-          name: this.props.edited.book.name,
-          summary: this.props.edited.book.summary,
-          selectAuthor: this.setDefaultAuthors(this.props.edited.book.author),
-          button: "Editar",
-          titleOperation: "Editar Livro"
-        });
+      this.setState({
+        window: !this.state.window,
+        name: this.props.edited.book.name,
+        summary: this.props.edited.book.summary,
+        selectAuthor: this.setDefaultAuthors(this.props.edited.book.author),
+        button: "Editar",
+        titleOperation: "Editar Livro"
+      });
     }
   }
 
@@ -109,12 +109,12 @@ export default class FormBook extends Component {
     return (
       <>
         <div
-            className={this.state.window ? "btn-open open" : "btn-open"}
-            onClick={this.toggleForm}
-          >
-            <i className="fas fa-plus"></i>
-            Abrir
-          </div>
+          className={this.state.window ? "btn-open open" : "btn-open"}
+          onClick={this.toggleForm}
+        >
+        <i className="fas fa-plus"></i>
+        Abrir
+        </div>
 
 
         <div
@@ -158,9 +158,8 @@ export default class FormBook extends Component {
                   textField='name'
                   value={this.state.selectAuthor}
                   onChange={author => {
-                      // const names = list.map(author => author.id);
-                      this.setState({selectAuthor: author})
-                    }
+                    this.setState({ selectAuthor: author })
+                  }
                   }
                 />
               </label>
